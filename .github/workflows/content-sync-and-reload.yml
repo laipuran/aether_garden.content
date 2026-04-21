@@ -1,0 +1,44 @@
+name: Sync content to server and reload website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "content/blog/**"
+      - "content/notes/**"
+
+jobs:
+  sync-and-reload:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+      CONTENT_REPO_DIR: ${{ secrets.CONTENT_REPO_DIR || '/opt/aether_garden/aether_garden.content' }}
+      WEBSITE_RELOAD_URL: ${{ secrets.WEBSITE_RELOAD_URL }}
+      WEBSITE_RELOAD_TOKEN: ${{ secrets.WEBSITE_RELOAD_TOKEN }}
+    steps:
+      - name: Configure SSH key
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$DEPLOY_PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Sync server content repo to pushed commit
+        run: |
+          ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
+            "set -euo pipefail; cd '$CONTENT_REPO_DIR'; git fetch --all --prune; git checkout '${{ github.sha }}'"
+
+      - name: Trigger backend content reload
+        run: |
+          curl -sS -X POST "$WEBSITE_RELOAD_URL" \
+            -H "X-Reload-Token: $WEBSITE_RELOAD_TOKEN" \
+            -H "Content-Type: application/json" \
+            --retry 3 \
+            --retry-delay 2 \
+            --retry-connrefused \
+            --fail
