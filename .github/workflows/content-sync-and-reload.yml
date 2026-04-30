@@ -40,7 +40,7 @@ jobs:
       - name: Sync server content repo to pushed commit
         run: |
           ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
-            "set -euo pipefail; cd '$CONTENT_REPO_DIR'; git fetch --all --prune; git checkout '${{ github.sha }}'"
+            "set -euo pipefail; cd '$CONTENT_REPO_DIR'; git config --global --add safe.directory '$CONTENT_REPO_DIR'; git fetch --all --prune; git checkout '${{ github.sha }}'"
 
       - name: Trigger backend content reload
         run: |
