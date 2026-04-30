@@ -1,6 +1,7 @@
 name: Sync content to server and reload website
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
