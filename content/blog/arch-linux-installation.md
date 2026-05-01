@@ -4,13 +4,19 @@ title: ArchLinux 安装 Nvidia 驱动过程中我所踩过的坑
 date: 2026-04-30
 excerpt: eGPU 场景的核心问题是“驱动加载时序”与“链路稳定性”
 tags:
-    - archlinux
-    - nvidia
-    - egpu
-    - linux
+  - archlinux
+  - nvidia
+  - egpu
+  - linux
 status: published
-updatedAt: 2026-04-30
+updatedAt: 2026-05-1
 ---
+## 省流
+通过安装 bolt，和调整 nvidia 服务与 SDDM 启动顺序来解决 nvidia-smi 检测不到显卡的问题，但是显卡直通显示器目前还做不到。
+
+## 后日谈
+
+- 2026.4.30，nvidia-smi 已经可以正常检测显卡了，但是 Wayland 和 eGPU 的问题始终无法解决，可能过几天尝试一下 X11 的方案。
 
 ## 一个偶然的想法
 前天晚上突然想配点环境玩玩，于是准备在 Fedora 和 ArchLinux 中选一个。开始是打算配一个 WSL 系统玩玩得了，但是发现 Arch 好像没有现成的 WSL 内核，问了问别人，最终打算还是从硬盘划 200G 出来把玩一下。
@@ -20,6 +26,7 @@ updatedAt: 2026-04-30
 我自己用的是一套比较特殊的显示方案：笔记本屏幕使用核显，然后通过雷电口连接一个雷蛇 Core X V2，然后显卡直通一个 HKC 显示屏（HDR 问题还没有解决）。
 
 ## 先说系统环境
+
 - 系统: Arch Linux
 - 内核: 6.19.14-arch1-1 (含 LTS)
 - eGPU: Razer Core X V2 (USB4)
@@ -42,6 +49,7 @@ sudo pacman -S bolt
 
 ## 求助 AI
 然后就发现 fastfetch 和 lspci 识别到了 RTX 5060Ti。但是事情没这么简单，nvidia-smi 仍然显示 "No devices were found"（可能先前显示的是驱动未就绪之类，我不太记得了）。翻阅 Arch Wiki 无果之后，就用 opencode 问 GPT 5.2 Codex 怎么解决，它给出的最终解决方法是：
+
 1. 清空 initramfs 预加载模块
    - 文件: /etc/mkinitcpio.conf
    - 修改: MODULES=()
@@ -58,9 +66,10 @@ sudo pacman -S bolt
    - 内容: After/Requires nvidia-egpu.service（当需要热插拔时去掉Requires！）
 
 相关的文件改动有：
+
 - /etc/systemd/system/nvidia-egpu.service
 
-```
+```ini
 [Unit]
 Description=Load NVIDIA modules after Thunderbolt
 After=bolt.service
@@ -80,7 +89,7 @@ WantedBy=multi-user.target
 
 - /etc/systemd/system/sddm.service.d/override.conf
 
-```
+```ini
 [Unit]
 After=nvidia-egpu.service
 # 当不需要热插拔时，取消下一行的注释
@@ -89,13 +98,14 @@ After=nvidia-egpu.service
 
 - /etc/modprobe.d/nvidia-egpu.conf
 
-```
+```conf
 options nvidia NVreg_EnableMSI=0
 ```
 
 ## 关键日志与结论
 ### 1) 设备可见但驱动无法完成初始化
 dmesg 关键错误:
+
 - NVRM: Xid 79, GPU has fallen off the bus
 - pciehp: Slot Link Down / Card not present
 - nvidia-modeset: Error while waiting for GPU progress
@@ -104,6 +114,7 @@ dmesg 关键错误:
 
 ### 2) MSI-X 失败导致显示设置卡死
 后续日志显示:
+
 - NVRM: Failed to enable MSI-X
 - RmInitAdapter failed
 
@@ -112,23 +123,22 @@ dmesg 关键错误:
 ### 3) MSI-X 失败 -> 禁用 MSI
 问题: 调整多显示器时卡死
 措施:
+
 1. 禁用 MSI
    - 文件: /etc/modprobe.d/nvidia-egpu.conf
    - 内容: options nvidia NVreg_EnableMSI=0
 2. 重建 initramfs
    - 命令: mkinitcpio -P
 
-效果:
-- 日常可用明显提升
-- 但在设置中将亮度调至最大仍会卡死
-
-### 4) 临时 GRUB 参数 (已撤销)
+### 4) 临时 GRUB 参数（无效的参数）
 尝试:
+
 - pci=realloc
 - pcie_aspm=off
 
 
 ## 经验总结
+
 - eGPU 场景的核心问题是“驱动加载时序”与“链路稳定性”
 - initramfs 过早加载会导致 GPU 掉线
 - 将驱动加载延后到 Thunderbolt 稳定后，是最有效的修复手段
