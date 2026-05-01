@@ -1,14 +1,14 @@
 ---
 slug: navigation-in-uwp-programming
 title: UWP 中的页面导航
-date: 2020-07-29
+date: 2020-05-03
 excerpt: 通过一个空白应用示例，演示 UWP 中新增页面与 Frame 导航的基本做法。
 tags:
   - uwp
   - navigation
   - windows
 status: published
-updatedAt: 2020-07-29
+updatedAt: 2020-05-03
 ---
 
 在阅读这一篇文章时，如果您没有安装 UWP，请参照我写的：
