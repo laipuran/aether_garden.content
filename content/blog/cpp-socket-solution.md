@@ -4,9 +4,9 @@ title: C++ Socket 解决方案
 date: 2020-05-03
 excerpt: 记录在高版本 Visual Studio 中进行 C++ Socket 编程时的常见问题与可用方案。
 tags:
-  - cplusplus
+  - cpp
   - socket
-  - winsock
+  - windows
 status: draft
 updatedAt: 2020-05-03
 ---

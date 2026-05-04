@@ -4,7 +4,7 @@ title: ArchLinux 安装 Nvidia 驱动过程中我所踩过的坑
 date: 2026-04-30
 excerpt: eGPU 场景的核心问题是“驱动加载时序”与“链路稳定性”
 tags:
-  - archlinux
+  - arch
   - nvidia
   - egpu
   - linux

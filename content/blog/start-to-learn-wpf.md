@@ -7,6 +7,7 @@ tags:
   - wpf
   - dotnet
   - windows
+  - csharp
 status: published
 updatedAt: 2021-01-03
 ---
