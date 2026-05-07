@@ -1,7 +1,7 @@
 ---
 slug: wsl-distro-broken-inspirations
 title: WSL Distro 故障的启发
-date: 2026-05-04
+date: 2026-04-09
 excerpt: WSL2 VHDX 存储在 exFAT 分区时的损坏事故，以及在恢复环境时的思考。
 tags:
   - wsl
