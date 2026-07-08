@@ -1,11 +1,11 @@
 ---
 slug: before-sleep
 title: 睡前
-date: 2026-05-15
+date: 2026-06-22
 tags:
   - sentimental
 status: published
-updatedAt: 2026-05-15
+updatedAt: 2026-06-22
 ---
 
 刚看一集《未闻花名》，想起了小学第一次听《Secret Base》，是在小学毕业的时候，zrx 提议我们几个唱这首歌的中文版。当时的我还不了解这首歌的含义，直到现在回想，才意识到我错过了很多。

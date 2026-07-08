@@ -9,7 +9,7 @@ tags:
   - egpu
   - linux
 status: published
-updatedAt: 2026-05-1
+updatedAt: 2026-05-01
 ---
 ## 省流
 通过安装 bolt，和调整 nvidia 服务与 SDDM 启动顺序来解决 nvidia-smi 检测不到显卡的问题，但是显卡直通显示器目前还做不到。
