@@ -28,7 +28,7 @@ Frame.NavigationService.Navigate(new Uri("YourPage.xaml", UriKind.Relative));
 
 快捷键 Ctrl + Shift + A 添加新项，搜索“资源”：
 
-![资源文件](https://laipuran.github.io/blog-img/资源文件.png)
+![资源文件](https://laipuran.github.io/blog-img/wpf-resource-files.png)
 
 将资源拖拽到 `*.resx` 中，就可以通过：
 

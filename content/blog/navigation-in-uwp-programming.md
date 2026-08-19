@@ -19,7 +19,7 @@ OK, let's start working.
 
 首先，创建一个空白应用，进入后，在左上角项目中新建项目。
 
-![UWP加入新页面](https://laipuran.github.io/blog-img/UWP%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B5%E9%9D%A2.png)
+![UWP加入新页面](https://laipuran.github.io/blog-img/uwp-add-new-page.png)
 
 在 **新建的页面** 加入内容，如：
 
@@ -44,4 +44,4 @@ MyFrame.Navigate(typeof(你新建页面的名字));
 
 按 **Ctrl** + **F5** 运行代码，查看结果。
 
-[下载实例](https://laipuran.github.io/blog-img/Navigate.rar)
+[下载实例](https://laipuran.github.io/blog-img/navigate.zip)

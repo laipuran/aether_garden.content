@@ -19,13 +19,13 @@ updatedAt: 2020-05-21
 
 进入设置 -> 更新与安全 -> 开发者选项 -> 选择 **开发人员选项**
 
-![开发人员模式](https://laipuran.github.io/blog-img/%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E6%A8%A1%E5%BC%8F.png)
+![开发人员模式](https://laipuran.github.io/blog-img/uwp-dev-mode.png)
 
 ### 2. 安装 Visual Studio 组件
 
 打开 Visual Studio Installer，点击 **修改**，选择安装负载 **Windows 通用平台开发**。
 
-![安装UWP运行负载](https://laipuran.github.io/blog-img/%E5%AE%89%E8%A3%85UWP%E8%BF%90%E8%A1%8C%E8%B4%9F%E8%BD%BD.png)
+![安装UWP运行负载](https://laipuran.github.io/blog-img/uwp-install-workload.png)
 
 经过漫长的等待后，我们启动 Visual Studio。
 
@@ -37,6 +37,6 @@ updatedAt: 2020-05-21
 
 用 C++ 的同志们注意：必须选择 C++ 语言，翻到最底端点击下载 C++ UWP 运行负载，自动安装后即可使用。
 
-![创建新项目](https://laipuran.github.io/blog-img/%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE.png)
+![创建新项目](https://laipuran.github.io/blog-img/uwp-new-project.png)
 
 Then, start coding now!
