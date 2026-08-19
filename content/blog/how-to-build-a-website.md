@@ -1,23 +1,23 @@
 ---
 slug: how-to-build-a-website
-title: 如何自建一个网站
+title: 如何自建一个网站——Jekyll篇
 date: 2022-12-16
-excerpt: 一份基于树莓派与 Jekyll 的个人网站搭建记录，从环境准备到本地运行。
+excerpt: 一份基于 Jekyll 的个人网站搭建记录，从环境准备到本地运行。
 tags:
   - jekyll
   - website
-  - raspberrypi
 status: published
-updatedAt: 2022-12-16
+updatedAt: 2026-08-19
 ---
 
 ### 1. 准备工作
 
-- 往树莓派中烧写系统
+- 使用任意 Linux 发行版
 - 可以选择换成 [清华的源](https://mirrors.tuna.tsinghua.edu.cn/)
 
 ### 2. 安装 Ruby 和 Ruby-dev
 
+这里以 Debian 系发行版为例：
 ```bash
 sudo apt install ruby -y
 sudo apt install ruby-dev -y
@@ -55,7 +55,7 @@ cd ./...
 jekyll new my awesome-website
 ```
 
-### 5. 像本篇一样弄好头信息
+### 5. ~~像本篇一样~~弄好头信息
 
 ```yaml
 ---
