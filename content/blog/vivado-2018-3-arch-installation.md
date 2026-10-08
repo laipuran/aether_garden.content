@@ -86,10 +86,7 @@ sudo udevadm control --reload-rules && sudo udevadm trigger
 
 ```bash
 echo 'source /opt/Xilinx/Vivado/2018.3/settings64.sh' >> ~/.zshrc
-echo 'export _JAVA_AWT_WM_NONREPARENTING=1' >> ~/.zshrc
 ```
-
-第二条是给 Wayland 下的 Java GUI 用的。
 
 ### 5. 验证
 
@@ -103,9 +100,6 @@ vivado -version
 1. **ConfigGen 交互死循环**：见上，无输入会刷出几个 G 的日志。用 `-e/-l` 直接安装最省心。
 2. **升级内核后未重启导致设备不识别**：运行中的内核版本和磁盘上的模块目录不一致时，`uas` / `usb-storage` 等模块加载不了，插上移动硬盘会认不到。做硬件、存储相关操作前，先重启到当前内核最稳妥。
 3. **`rlwrap`、`jre8-openjdk` 可能非必需**：自带 JRE 9.0.4 与自带 rlwrap 都能用。
-4. **约束文件里的引脚冲突**：某些现成的 `.xdc` 里 `rstn` 和 `CPU_RESETN` 会映射到同一个引脚（例如 C12），顶层模块不能同时声明这两个端口，否则引脚冲突，只能保留其一。
-5. **时钟约束的笔误**：有的 `.xdc` 把 `create_clock -period` 写成了 100.00（即 10 MHz），而板载时钟实际是 100 MHz（period 10.00）。这只影响时序分析，不影响功能，但做正经时序收敛时要注意。
-6. **Wayland**：Vivado GUI 是 Java 程序，需要 `_JAVA_AWT_WM_NONREPARENTING=1`。
 
 ## 清理与卸载
 
